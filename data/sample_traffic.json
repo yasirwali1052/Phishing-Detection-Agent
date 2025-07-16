@@ -1,0 +1,103 @@
+[
+    {
+      "timestamp": "2025-07-16T10:00:00Z",
+      "src_ip": "192.168.1.10",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/index.html",
+      "packet_size": 800,
+      "rate_per_minute": 50,
+      "user_agent": "Mozilla/5.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:01:00Z",
+      "src_ip": "192.168.1.11",
+      "dst_ip": "10.0.0.10",
+      "request_type": "POST",
+      "path": "/login",
+      "packet_size": 1050,
+      "rate_per_minute": 400,
+      "user_agent": "curl/7.68.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:02:00Z",
+      "src_ip": "192.168.1.12",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/home",
+      "packet_size": 300,
+      "rate_per_minute": 10,
+      "user_agent": "Mozilla/5.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:03:00Z",
+      "src_ip": "192.168.1.13",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/register",
+      "packet_size": 1100,
+      "rate_per_minute": 500,
+      "user_agent": "python-requests/2.25.1"
+    },
+    {
+      "timestamp": "2025-07-16T10:04:00Z",
+      "src_ip": "192.168.1.14",
+      "dst_ip": "10.0.0.10",
+      "request_type": "POST",
+      "path": "/api/data",
+      "packet_size": 600,
+      "rate_per_minute": 250,
+      "user_agent": "Mozilla/5.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:05:00Z",
+      "src_ip": "192.168.1.15",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/index.html",
+      "packet_size": 1024,
+      "rate_per_minute": 320,
+      "user_agent": "Go-http-client/1.1"
+    },
+    {
+      "timestamp": "2025-07-16T10:06:00Z",
+      "src_ip": "192.168.1.16",
+      "dst_ip": "10.0.0.10",
+      "request_type": "POST",
+      "path": "/form",
+      "packet_size": 900,
+      "rate_per_minute": 60,
+      "user_agent": "Mozilla/5.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:07:00Z",
+      "src_ip": "192.168.1.17",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/login",
+      "packet_size": 950,
+      "rate_per_minute": 350,
+      "user_agent": "Mozilla/5.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:08:00Z",
+      "src_ip": "192.168.1.18",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/search?q=ddos",
+      "packet_size": 780,
+      "rate_per_minute": 290,
+      "user_agent": "Mozilla/5.0"
+    },
+    {
+      "timestamp": "2025-07-16T10:09:00Z",
+      "src_ip": "192.168.1.19",
+      "dst_ip": "10.0.0.10",
+      "request_type": "GET",
+      "path": "/index.html",
+      "packet_size": 1400,
+      "rate_per_minute": 600,
+      "user_agent": "curl/8.0.0"
+    }
+  ]
+  
