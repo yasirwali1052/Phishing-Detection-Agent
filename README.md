@@ -1,75 +1,105 @@
 
-# 🛡️ Phishing Detection Agent – Powered by LangGraph + Groq
 
-This project is a lightweight **AI-powered phishing detection pipeline** built using **LangGraph**, **Groq LLMs**, and **external threat intelligence tools** like VirusTotal.
+# 🛡️ AI Threat Detection Agent – Powered by LangGraph + Groq
 
-It processes suspicious **email logs** in real time by checking:
-- 🕵️ Malicious URLs
-- 📎 Dangerous attachments
-- 🧠 Phishing keywords or phrases
+This project is a lightweight **AI-powered cyber threat detection pipeline** built using **LangGraph**, **Groq LLMs**, and **external tools** like **VirusTotal**.
+It supports **real-time phishing email analysis** as well as **DDoS traffic pattern detection** using a hybrid rule + LLM approach.
+
+---
+
+## 🚨 What It Detects
+
+* 🕵️ **Phishing Emails**
+
+  * Malicious URLs
+  * Dangerous file attachments
+  * Suspicious keywords or phrases
+
+* 🌐 **DDoS Attacks**
+
+  * High-rate, large-packet network traffic
+  * Automated bot behavior
+  * LLM-assisted traffic analysis and explanation
+
+---
 
 ## 🚀 Key Features
 
-- ✅ **Modular Agents**: Each agent handles a specific check (URL, file, text)
-- 🔄 **LangGraph StateFlow**: Orchestrates agents in a directed flow using `StateGraph`
-- 🤖 **LLM Reasoning**: Uses Groq's fast & affordable LLM to make final phishing decisions
-- 🧪 **VirusTotal Integration**: Real-time threat scoring for suspicious links
+* ✅ **Modular Agents**: Each agent handles a specific task (phishing or DDoS)
+* 🔄 **LangGraph StateFlow**: Directs how agents process inputs
+* 🧠 **LLM Reasoning**: Uses Groq's Mixtral/LLama3 via LangChain for context-aware analysis
+* 🔗 **VirusTotal Integration**: For real-time phishing URL threat scoring
 
 ---
 
 ## 📁 Project Structure
 
 ```
-
-cyber\_ai\_soc/
+cyber_ai_soc/
 ├── agents/
-│   └── phishing\_agent.py         # Main agent logic
+│   ├── phishing_agent.py          # Phishing logic
+│   └── ddos_agent.py              # DDoS logic (rule + LLM)
+│
 ├── tools/
-│   ├── vt\_checker.py             # VirusTotal URL scanner
-│   ├── attachment\_checker.py     # Flags risky file extensions
-│   └── rule\_engine.py            # Detects phishing keywords
+│   ├── vt_checker.py              # VirusTotal scanner
+│   ├── attachment_checker.py      # Flags risky file types
+│   ├── rule_engine.py             # Phishing keyword rules
+│   ├── traffic_analyzer.py        # Extracts traffic features
+│   ├── ddos_rules.py              # Rule-based DDoS detection
+│   └── llm_explainer.py           # Groq LLM-based DDoS explanation
+│
 ├── workflows/
-│   └── langgraph\_phishing\_flow\.py  # LangGraph node flow
-├── .env                          # API keys (Groq + VirusTotal)
-├── main.py                       # Run the pipeline with sample log
-├── requirements.txt              # All dependencies
-
+│   ├── langgraph_phishing_flow.py # LangGraph flow for phishing
+│   └── langgraph_ddos_flow.py     # LangGraph flow for DDoS
+│
+├── data/
+│   └── sample_traffic.json        # Sample DDoS traffic logs
+│
+├── main.py                        # Unified entry to test both agents
+├── .env                           # API keys (Groq + VirusTotal)
+├── requirements.txt               # All dependencies
+└── README.md                      # This file
 ```
 
 ---
 
 ## 🧠 How It Works
 
-1. 📨 **Input**: A suspicious log is received containing:
-   - URL
-   - File attachment name
-   - Email text
+### 🟪 Phishing Detection Pipeline
 
-2. 🧩 **Tools** check:
-   - `vt_checker.py`: Queries VirusTotal API for the URL
-   - `attachment_checker.py`: Flags file types like `.html`, `.exe`, etc.
-   - `rule_engine.py`: Checks for text like `"verify now"`, `"urgent"`, etc.
+1. **Input**: A suspicious email log with URL, attachment, and message text
+2. **Tools**:
 
-3. 🧠 **LangGraph StateGraph**:
-   - Runs `phishing_agent.py` first
-   - Then calls `llm_reasoner()` using Groq's **Mixtral** model to reason over the results
+   * `vt_checker.py`: Checks URL via VirusTotal API
+   * `attachment_checker.py`: Flags `.exe`, `.html`, etc.
+   * `rule_engine.py`: Detects phishing keywords like `urgent`, `verify`
+3. **LLM Reasoning**:
 
-4. 📢 **Final Output**:
-   - LLM responds: "This is a phishing attack" or "Looks safe"
-   - Full reasoning is printed
+   * Groq LLM evaluates all signals to confirm if phishing
+4. **LangGraph** coordinates the flow and final verdict
+
+---
+
+### 🟥 DDoS Detection Pipeline
+
+1. **Input**: JSON traffic logs with IPs, rates, sizes, etc.
+2. **Tools**:
+
+   * `traffic_analyzer.py`: Extracts request type, size, rate
+   * `ddos_rules.py`: Flags high-rate + bot-like behavior
+   * `llm_explainer.py`: Groq LLM detects deeper pattern from log
+3. **LangGraph** flow and `ddos_agent.py` combine both methods for final decision
 
 ---
 
 ## 🌐 API Keys Setup
 
-Create a `.env` file:
+Create a `.env` file in the project root with:
 
 ```
-
-GROQ\_API\_KEY=your\_groq\_key\_here
-VT\_API\_KEY=your\_virustotal\_key\_here
-
-````
+GROQ_API_KEY=your_groq_key_here
+VT_API_KEY=your_virustotal_key_here
+```
 
 ---
 
@@ -80,54 +110,39 @@ VT\_API\_KEY=your\_virustotal\_key\_here
 git clone https://github.com/yasirwali1052/Phishing-Detection-Agent.git
 cd Phishing-Detection-Agent
 
-# Step 2: Create virtual environment
+# Step 2: Set up virtual environment
 python -m venv venv
-venv\Scripts\activate    # Windows
+venv\Scripts\activate    # On Windows
 # or
-source venv/bin/activate # Linux/Mac
+source venv/bin/activate # On Linux/Mac
 
 # Step 3: Install dependencies
 pip install -r requirements.txt
 
-# Step 4: Add .env file with API keys
+# Step 4: Add your .env file
 
-# Step 5: Run the pipeline
+# Step 5: Run either detection mode
+python agents/phishing_agent.py        # For phishing detection
+python agents/ddos_agent.py            # For DDoS detection
+python workflows/langgraph_ddos_flow.py # LangGraph flow
+```
+
+Or run all via:
+
+```bash
 python main.py
-
+```
 
 ---
 
-## 🛠️ Future Enhancements
 
-* Add support for DDoS and user behavior anomaly detection
-* Real-time alerts and report generation
-* Streamlit dashboard for monitoring
-
-
+---
 
 ## 👤 Author
 
 **Yasir Wali**
 📍 NUML Islamabad | B.S. in AI
-🌐 [GitHub](https://github.com/yasirwali1052) | 💼 [LinkedIn](https://www.linkedin.com/in/yasirwali1052)
+🌐 [GitHub](https://github.com/yasirwali1052)
+💼 [LinkedIn](https://www.linkedin.com/in/yasirwali1052)
 
-
-### ✅ How to Add to Your Repo
-
-1. Save this as `README.md` in your project folder.
-2. Then run in CMD:
-
-```bash
-git add README.md
-git commit -m "Add project documentation"
-git push
-````
-
-Let me know if you want:
-
-* A `Streamlit` UI added later
-* A badge and GitHub project topics
-* A video or image preview section in the README
-
-You're doing excellent — this README is professional and complete!
 
